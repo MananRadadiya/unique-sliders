@@ -1,0 +1,80 @@
+/* ===== ORBIT CONTAINER ===== */
+.orbit-wrapper {
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle at center, #0f2027, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ===== ORBIT CORE ===== */
+.orbit {
+  position: relative;
+  width: 400px;
+  height: 400px;
+}
+
+/* ===== ORBIT CARD ===== */
+.orbit-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 110px;
+  height: 110px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.05)
+  );
+
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    inset 0 0 15px rgba(255, 255, 255, 0.15);
+
+  transition:
+    transform 0.7s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.4s ease,
+    opacity 0.4s ease;
+}
+
+/* ===== ACTIVE MAGNET EFFECT ===== */
+.orbit-card.active {
+  box-shadow:
+    0 0 40px rgba(255, 255, 255, 0.7),
+    0 0 80px rgba(0, 255, 255, 0.6),
+    inset 0 0 25px rgba(255, 255, 255, 0.4);
+}
+
+/* ===== HOVER FEEDBACK ===== */
+.orbit-card:hover {
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
+  .orbit {
+    width: 280px;
+    height: 280px;
+  }
+
+  .orbit-card {
+    width: 80px;
+    height: 80px;
+    font-size: 2.2rem;
+  }
+}

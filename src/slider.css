@@ -1,0 +1,264 @@
+/* =========================
+   🌌 GLOBAL RESET & TOKENS
+========================= */
+:root {
+  --bg-dark: #0b0f1a;
+  --bg-light: #f9f9fb;
+  --accent: #6366f1;
+  --accent-glow: rgba(99, 102, 241, 0.5);
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --radius-xl: 18px;
+  --radius-lg: 14px;
+  --transition: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #f8fafc, #eef2ff);
+  color: var(--text-main);
+  font-family: "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* =========================
+   🔥 1. DRAG / SWIPE SLIDER
+========================= */
+.slider {
+  width: 100%;
+  height: 260px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  cursor: grab;
+  background: #000;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s var(--transition);
+}
+
+.slider:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+}
+
+.slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fadeSlide 0.5s ease;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   🔁 2. INFINITE SLIDER
+========================= */
+.infinite-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+}
+
+.track {
+  display: flex;
+  transition: transform 0.5s var(--transition);
+}
+
+.slide {
+  min-width: 100%;
+  height: 220px;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+
+.infinite-container button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.infinite-container button:hover {
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.infinite-container button:first-of-type {
+  left: 14px;
+}
+
+.infinite-container button:last-of-type {
+  right: 14px;
+}
+
+/* =========================
+   🧊 3. 3D COVERFLOW
+========================= */
+.coverflow {
+  position: relative;
+  height: 280px;
+  perspective: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.coverflow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent, rgba(0, 0, 0, 0.15));
+  pointer-events: none;
+}
+
+.card {
+  position: absolute;
+  width: 180px;
+  height: 240px;
+  border-radius: var(--radius-lg);
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(145deg, #111827, #1f2933);
+  color: white;
+  box-shadow:
+    0 40px 60px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: transform 0.5s var(--transition), filter 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  filter: brightness(1.15);
+}
+
+/* =========================
+   ⏱️ 4. STORY SLIDER
+========================= */
+.story-slider {
+  position: relative;
+  height: 200px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: white;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(2, 6, 23, 0.6);
+}
+
+.story-slider h1 {
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+.progress {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #22d3ee,
+    #6366f1,
+    #a855f7
+  );
+}
+
+@keyframes fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* =========================
+   📜 5. SCROLL SLIDER
+========================= */
+.scroll-slider {
+  height: 220px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, #ecfeff, #eef2ff);
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 600;
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 20px 50px rgba(99, 102, 241, 0.2);
+}
+
+/* =========================
+   📱 RESPONSIVE MAGIC
+========================= */
+@media (max-width: 768px) {
+  .slider {
+    height: 200px;
+  }
+
+  .slide {
+    font-size: 2rem;
+  }
+
+  .card {
+    width: 140px;
+    height: 200px;
+  }
+
+  .story-slider h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .slider {
+    height: 170px;
+  }
+
+  .card {
+    width: 120px;
+    height: 170px;
+    font-size: 2rem;
+  }
+}
