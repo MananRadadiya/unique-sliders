@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: black;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.helix-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  perspective: 2000px;
+  background: radial-gradient(circle at top, #111, #000);
+}
+
+.helix-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.helix-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  z-index: 3;
+}
+
+.helix-card {
+  position: absolute;
+  width: 340px;
+  height: 420px;
+  padding: 30px;
+  border-radius: 24px;
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  transition: transform 0.8s cubic-bezier(.22,.61,.36,1),
+              opacity 0.6s ease,
+              filter 0.6s ease;
+  backface-visibility: hidden;
+}
+
+.helix-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.helix-icon {
+  font-size: 64px;
+}
+
+.helix-card h2 {
+  font-size: 28px;
+}
+
+.helix-card p {
+  opacity: 0.8;
+  font-size: 18px;
+}
+
+.helix-bar {
+  width: 60px;
+  height: 4px;
+  background: white;
+  border-radius: 10px;
+}
+
+.helix-card.active {
+  box-shadow: 0 0 80px rgba(255,255,255,0.3);
+}
+
+/* Gradients */
+.purple { background: linear-gradient(135deg,#7c3aed,#ec4899,#ef4444); }
+.blue { background: linear-gradient(135deg,#2563eb,#06b6d4,#14b8a6); }
+.pink { background: linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899); }
+.green { background: linear-gradient(135deg,#22c55e,#10b981,#14b8a6); }
+.orange { background: linear-gradient(135deg,#f97316,#ef4444,#ec4899); }
+
+/* Navigation */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  font-size: 42px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+  z-index: 10;
+}
+
+.nav:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav.left { left: 30px; }
+.nav.right { right: 30px; }
+
+@media (max-width: 768px) {
+  .helix-card {
+    width: 280px;
+    height: 360px;
+  }
+}
