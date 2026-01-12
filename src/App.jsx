@@ -10,13 +10,14 @@ import SingularityShatter from './components/SingularityShatter';
 function App() {
   return (
     <>
+    <SingularityShatter />
       <CoverflowSlider />
       <OrbitSlider />
       <FinalBossV2 />
       <LiquidMorphSlider />
       <QuantumWarpSlider />
       <HelixCarousel />
-      <SingularityShatter />
+      
     </>
   );
 }
