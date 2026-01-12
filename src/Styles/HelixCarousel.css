@@ -1,122 +1,211 @@
-* {
-  box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap');
 
-body {
+/* --- 1. GLOBAL RESET & SCROLL FIXES --- */
+html, body {
   margin: 0;
-  background: black;
-  font-family: Inter, system-ui, sans-serif;
+  padding: 0;
+  width: 100%;
+  /* Prevents horizontal scrollbar on laptops */
+  overflow-x: hidden; 
+  background: #050505;
+  font-family: 'Rajdhani', sans-serif;
+  /* Allows vertical scrolling if you have more content below */
+  overflow-y: auto; 
 }
 
-.helix-wrapper {
-  width: 100vw;
-  height: 100vh;
+/* --- 2. MAIN CONTAINER --- */
+.helix-container {
   position: relative;
+  width: 100vw;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Clips the 3D elements so they don't break layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px; /* Controls the depth of the 3D effect */
+  background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+  /* Enables touch gestures on mobile without scrolling the page */
+  touch-action: pan-y; 
+}
+
+/* --- 3. BACKGROUND CANVAS --- */
+.helix-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  /* Critical: allows clicks to pass through canvas to the cards */
+  pointer-events: none; 
+}
+
+/* --- 4. 3D VIEWPORT & RING --- */
+.helix-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  z-index: 10;
+  pointer-events: none; /* Allows clicks to pass through empty space */
+}
+
+.helix-ring {
+  position: relative;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+/* --- 5. CARD WRAPPER (Positioning) --- */
+.helix-card-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 440px;
+  /* Centering Logic */
+  margin-top: -220px;
+  margin-left: -160px; 
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s;
+  /* Critical: Re-enables clicking on the actual cards */
+  pointer-events: auto; 
+  cursor: pointer;
+}
+
+/* --- 6. CARD VISUALS (Glassmorphism & Neon) --- */
+.helix-card {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  /* Optimization: Tells browser to prep for 3D movement */
+  will-change: transform; 
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.3s ease;
   overflow: hidden;
-  perspective: 2000px;
-  background: radial-gradient(circle at top, #111, #000);
+  position: relative;
 }
 
-.helix-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+/* Hover Effect (Desktop Only) */
+@media (hover: hover) {
+  .helix-card:hover {
+    border-color: var(--glow-color);
+    box-shadow: 0 0 40px var(--glow-color), inset 0 0 20px rgba(0,0,0,0.2);
+    transform: translateY(-10px) scale(1.02);
+  }
 }
 
-.helix-stage {
-  position: absolute;
-  inset: 0;
+/* --- 7. CARD CONTENT --- */
+.card-inner {
+  padding: 30px;
+  z-index: 2;
+  position: relative;
+}
+
+.icon-box {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform-style: preserve-3d;
-  z-index: 3;
+  font-size: 40px;
+  margin: 0 auto 20px;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
 }
 
-.helix-card {
-  position: absolute;
-  width: 340px;
-  height: 420px;
-  padding: 30px;
-  border-radius: 24px;
-  color: white;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-  transition: transform 0.8s cubic-bezier(.22,.61,.36,1),
-              opacity 0.6s ease,
-              filter 0.6s ease;
-  backface-visibility: hidden;
-}
-
-.helix-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.helix-icon {
-  font-size: 64px;
+.helix-card:hover .icon-box {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .helix-card h2 {
-  font-size: 28px;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .helix-card p {
-  opacity: 0.8;
-  font-size: 18px;
+  color: #ccc;
+  font-size: 16px;
+  margin-top: 12px;
+  line-height: 1.5;
+  font-weight: 300;
 }
 
-.helix-bar {
-  width: 60px;
-  height: 4px;
-  background: white;
-  border-radius: 10px;
-}
-
-.helix-card.active {
-  box-shadow: 0 0 80px rgba(255,255,255,0.3);
-}
-
-/* Gradients */
-.purple { background: linear-gradient(135deg,#7c3aed,#ec4899,#ef4444); }
-.blue { background: linear-gradient(135deg,#2563eb,#06b6d4,#14b8a6); }
-.pink { background: linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899); }
-.green { background: linear-gradient(135deg,#22c55e,#10b981,#14b8a6); }
-.orange { background: linear-gradient(135deg,#f97316,#ef4444,#ec4899); }
-
-/* Navigation */
-.nav {
+/* --- 8. CONTROLS (Buttons) --- */
+.helix-controls {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 40px;
+  display: flex;
+  gap: 20px;
+  z-index: 100; /* Ensures buttons are strictly on top */
+  pointer-events: auto;
+}
+
+.helix-controls button {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: none;
-  font-size: 42px;
-  background: rgba(255,255,255,0.1);
-  color: white;
+  font-size: 24px;
   cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
-  z-index: 10;
+  backdrop-filter: blur(5px);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.nav:hover {
-  background: rgba(255,255,255,0.25);
-  transform: translateY(-50%) scale(1.1);
+.helix-controls button:hover {
+  background: white;
+  color: black;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
 }
 
-.nav.left { left: 30px; }
-.nav.right { right: 30px; }
+.helix-controls button:active {
+  transform: scale(0.95);
+}
 
+/* --- 9. MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
-  .helix-card {
-    width: 280px;
-    height: 360px;
+  .helix-card-wrapper {
+    width: 260px;
+    height: 380px;
+    margin-top: -190px;
+    margin-left: -130px;
+  }
+  
+  .helix-card h2 {
+    font-size: 22px;
+  }
+  
+  .helix-controls {
+    bottom: 30px;
+  }
+  
+  /* Disable complicated hover effects on mobile for better performance */
+  .helix-card:hover {
+    transform: none;
   }
 }

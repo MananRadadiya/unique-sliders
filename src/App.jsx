@@ -5,6 +5,7 @@ import HelixCarousel from './components/HelixCarousel';
 import LiquidMorphSlider from './components/LiquidMorphSlider';
 import OrbitSlider from './components/OrbitSlider';
 import QuantumWarpSlider from './components/QuantumWarpSlider';
+import SingularityShatter from './components/SingularityShatter';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <LiquidMorphSlider />
       <QuantumWarpSlider />
       <HelixCarousel />
+      <SingularityShatter />
     </>
   );
 }
